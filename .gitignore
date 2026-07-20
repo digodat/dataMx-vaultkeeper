@@ -1,0 +1,7 @@
+# macOS / editor junk
+.DS_Store
+.vscode/
+*.swp
+
+# Shell scripting artifacts
+*.log
