@@ -20,6 +20,9 @@ agente de IA. Si solo usas Obsidian, no te hace falta.
 ## Qué hay aquí
 
 - `automation/` — los scripts:
+  - `install.sh` — bootstrap de una sola corrida para una máquina nueva: brew,
+    git, gh, identidad de git, `gh auth login`, clona la bóveda y este repo, e
+    instala el candado. Ver "Setup en una máquina nueva" abajo.
   - `vaultChecker.sh` — audita el grafo de referencias (enlaces rotos, notas
     huérfanas)
   - `vaultGuard.sh` — vaultChecker + guard de borrado masivo; con `--install`
@@ -39,6 +42,19 @@ agente de IA. Si solo usas Obsidian, no te hace falta.
   (referencia; hoy no está activa)
 
 ## Setup en una máquina nueva (con terminal/agente)
+
+Una sola línea — instala Homebrew/git/gh si faltan, pide tu identidad de git,
+hace `gh auth login`, clona la bóveda y este repo, e instala el candado:
+
+```
+curl -fsSL https://raw.githubusercontent.com/digodat/dataMx-vaultkeeper/main/automation/install.sh | bash
+```
+
+Es lo mismo que hace `onBoarding/Sync.md` paso 3 en la bóveda — ese es el
+punto de entrada pensado para gente sin terminal previa. Si ya tienes este
+repo clonado, corre `automation/install.sh` directo en vez del `curl`.
+
+A mano, paso a paso, es esto (lo que hacía `install.sh` antes de existir):
 
 ```
 git clone <url-de-este-repo> ~/repos/vaultkeeping
