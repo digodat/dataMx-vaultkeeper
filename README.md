@@ -21,8 +21,9 @@ agente de IA. Si solo usas Obsidian, no te hace falta.
 
 - `automation/` — los scripts:
   - `install.sh` — bootstrap de una sola corrida para una máquina nueva: brew,
-    git, gh, identidad de git, `gh auth login`, clona la bóveda y este repo, e
-    instala el candado. Ver "Setup en una máquina nueva" abajo.
+    git, gh, identidad de git, `gh auth login`, clona la bóveda y este repo,
+    instala el candado, y deja los 6 plugins de Obsidian descargados y
+    Obsidian Git configurado. Ver "Setup en una máquina nueva" abajo.
   - `vaultChecker.sh` — audita el grafo de referencias (enlaces rotos, notas
     huérfanas)
   - `vaultGuard.sh` — vaultChecker + guard de borrado masivo; con `--install`
@@ -44,7 +45,9 @@ agente de IA. Si solo usas Obsidian, no te hace falta.
 ## Setup en una máquina nueva (con terminal/agente)
 
 Una sola línea — instala Homebrew/git/gh si faltan, pide tu identidad de git,
-hace `gh auth login`, clona la bóveda y este repo, e instala el candado:
+hace `gh auth login`, clona la bóveda y este repo, instala el candado, y deja
+descargados los 6 plugins de Obsidian que usan los botones del vault
+(Obsidian Git ya configurado para sincronizar solo cada 10 min):
 
 ```
 curl -fsSL https://raw.githubusercontent.com/digodat/dataMx-vaultkeeper/main/automation/install.sh | bash
@@ -62,7 +65,21 @@ git clone <url-de-este-repo> ~/repos/vaultkeeping
 ```
 
 El segundo comando instala el pre-push hook en tu clone de la bóveda: cada push
-corre primero el chequeo de grafo y el guard de borrado masivo.
+corre primero el chequeo de grafo y el guard de borrado masivo. (Con esto no
+quedan instalados los plugins de Obsidian — eso solo lo hace `install.sh`.)
+
+## Tests
+
+```
+./tests/test_install.sh
+```
+
+Cubre `automation/install.sh`: toda la lógica de "saltar si ya está hecho",
+el armado/descarga de cada plugin, y el merge de los JSON de Obsidian
+(`community-plugins.json`, `data.json` de Obsidian Git) — todo con
+`brew`/`git`/`gh`/`curl` mockeados como funciones de shell, así que corre
+offline y no toca nada real. Si tocas `install.sh`, corre esto antes de
+subir el cambio.
 
 ## Solo admin
 
